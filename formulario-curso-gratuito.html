@@ -596,6 +596,7 @@ const CURSO = {
     <div class="hero-meta" id="hero-meta"></div>
     <div class="hero-free" id="hero-preco">GRATUITO</div>
     <div style="margin-top:12px; font-size:13px; color:rgba(255,255,255,0.6);" id="hero-vagas"></div>
+    <div style="margin-top:6px; font-size:12px; color:rgba(255,255,255,0.45); display:none;" id="hero-instrutor"></div>
   </div>
 </div>
 
@@ -955,71 +956,106 @@ const formData = {};
 
 // ========== INICIALIZAÇÃO ==========
 document.addEventListener('DOMContentLoaded', () => {
-  // Foto do curso: lê da URL param ?foto=URL ou do objeto CURSO
-  const urlParams = new URLSearchParams(window.location.search);
-  const fotoParam = urlParams.get('foto');
-  const fotoUrl = fotoParam ? decodeURIComponent(fotoParam) : (CURSO.fotoUrl || null);
+  const p = new URLSearchParams(window.location.search);
+  const get = (key, fallback) => p.has(key) ? decodeURIComponent(p.get(key)) : fallback;
 
-  if (fotoUrl) {
+  // Sobrescrever CURSO com parâmetros da URL (flow passa tudo aqui)
+  CURSO.codigodocurso   = get('curso',      CURSO.codigodocurso || '');
+  CURSO.nome            = get('nome',       CURSO.nome);
+  CURSO.subtitulo       = get('subtitulo',  CURSO.subtitulo);
+  CURSO.data            = get('data',       CURSO.data);
+  CURSO.horario         = get('horario',    CURSO.horario);
+  CURSO.local           = get('local',      CURSO.local);
+  CURSO.instrutor       = get('instrutor',  CURSO.instrutor);
+  CURSO.instrutorCred   = get('cred',       CURSO.instrutorCred);
+  CURSO.vagasDisponiveis= p.has('vagas')    ? parseInt(p.get('vagas'))    : CURSO.vagasDisponiveis;
+  CURSO.vagasTotal      = p.has('vagastotal')? parseInt(p.get('vagastotal')): CURSO.vagasTotal;
+  CURSO.preco           = p.has('preco')    ? parseFloat(p.get('preco'))  : CURSO.preco;
+  CURSO.precoAntecipado = p.has('precoant') ? parseFloat(p.get('precoant')): CURSO.precoAntecipado;
+  CURSO.dataLimiteAntecipado = get('limite', CURSO.dataLimiteAntecipado);
+  CURSO.linkPagamento   = get('pagamento',  '');
+  CURSO.gratuito        = get('gratuito',   CURSO.gratuito ? 'true' : 'false') === 'true';
+  CURSO.telefoneInfo    = get('tel',        CURSO.telefoneInfo);
+  CURSO.fotoUrl         = get('foto',       CURSO.fotoUrl || '');
+
+  // Foto de fundo do hero
+  if (CURSO.fotoUrl) {
     const bg = document.getElementById('hero-img-bg');
     const img = new Image();
     img.onload = () => {
-      bg.style.backgroundImage = 'url(' + fotoUrl + ')';
+      bg.style.backgroundImage = 'url(' + CURSO.fotoUrl + ')';
       bg.classList.add('loaded');
     };
-    img.onerror = () => {
-      // fallback: usa padrão escuro sem foto
-      document.getElementById('hero-section').style.minHeight = '220px';
-    };
-    img.src = fotoUrl;
+    img.src = CURSO.fotoUrl;
   }
 
-  // Outros params opcionais da URL (para reutilizar o mesmo HTML sem editar)
-  const nomeParam    = urlParams.get('nome');
-  const dataParam    = urlParams.get('data');
-  const localParam   = urlParams.get('local');
-  const vagasParam   = urlParams.get('vagas');
-  const precoParam   = urlParams.get('preco');
-
-  if (nomeParam)  CURSO.nome       = decodeURIComponent(nomeParam);
-  if (dataParam)  CURSO.data       = decodeURIComponent(dataParam);
-  if (localParam) CURSO.local      = decodeURIComponent(localParam);
-  if (vagasParam) CURSO.vagasDisponiveis = parseInt(vagasParam);
-  if (precoParam) CURSO.preco      = parseFloat(precoParam);
-
-  // Preencher hero
-  const nomePartes = CURSO.nome.split(' ');
-  const primeiraLinha = nomePartes.slice(0, 2).join(' ');
-  const segundaLinha  = nomePartes.slice(2).join(' ');
+  // Montar título — quebra em duas linhas na última palavra
+  const palavras = CURSO.nome.trim().split(' ');
+  const ultima = palavras.pop();
+  const resto  = palavras.join(' ');
   document.getElementById('hero-nome').innerHTML =
-    segundaLinha
-      ? primeiraLinha + '<br><span>' + segundaLinha + '</span>'
-      : '<span>' + primeiraLinha + '</span>';
+    resto
+      ? resto + '<br><span>' + ultima + '</span>'
+      : '<span>' + ultima + '</span>';
 
+  // Subtítulo, vagas e preço
   document.getElementById('hero-sub').textContent = CURSO.subtitulo;
   document.getElementById('hero-vagas').textContent =
     CURSO.vagasDisponiveis + ' vagas disponíveis de ' + CURSO.vagasTotal;
 
+  if (CURSO.gratuito) {
+    document.getElementById('hero-preco').textContent = 'GRATUITO';
+    document.getElementById('hero-preco').style.background = '#27ae60';
+    document.getElementById('hero-preco').style.color = '#fff';
+  } else {
+    // Verificar preço antecipado
+    const hoje = new Date().toISOString().split('T')[0];
+    const usarAnt = CURSO.precoAntecipado &&
+                    CURSO.dataLimiteAntecipado &&
+                    hoje <= CURSO.dataLimiteAntecipado;
+    const precoExibir = usarAnt ? CURSO.precoAntecipado : CURSO.preco;
+    document.getElementById('hero-preco').textContent =
+      'R$ ' + precoExibir.toFixed(2).replace('.', ',');
+    if (usarAnt) {
+      document.getElementById('hero-preco').style.background = '#27ae60';
+      document.getElementById('hero-preco').style.color = '#fff';
+      document.getElementById('hero-vagas').textContent +=
+        ' · Preço antecipado até ' + CURSO.dataLimiteAntecipado.split('-').reverse().join('/');
+    } else {
+      document.getElementById('hero-preco').style.background = 'var(--gold)';
+      document.getElementById('hero-preco').style.color = 'var(--dark)';
+    }
+  }
+
+  // Pills de data, horário e local
   const meta = document.getElementById('hero-meta');
-  const items = [
+  meta.innerHTML = '';
+  const pills = [
     { icon: '\uD83D\uDCC5', txt: CURSO.data },
-    { icon: '\u23F0', txt: CURSO.horario },
+    { icon: '\u23F0',        txt: CURSO.horario },
     { icon: '\uD83D\uDCCD', txt: CURSO.local },
   ];
-  items.forEach(it => {
+  pills.forEach(it => {
+    if (!it.txt) return;
     const d = document.createElement('div');
     d.className = 'meta-pill';
     d.innerHTML = '<span style="font-size:14px;">' + it.icon + '</span> ' + it.txt;
     meta.appendChild(d);
   });
 
-  if (CURSO.gratuito) {
-    document.getElementById('hero-preco').textContent = 'GRATUITO';
-    document.getElementById('hero-preco').style.background = '#27ae60';
-  } else {
-    document.getElementById('hero-preco').textContent = 'R$ ' + CURSO.preco.toFixed(2).replace('.', ',');
-    document.getElementById('hero-preco').style.background = 'var(--gold)';
-    document.getElementById('hero-preco').style.color = 'var(--dark)';
+  // Instrutor no hero (se existir elemento)
+  const elInstrutor = document.getElementById('hero-instrutor');
+  if (elInstrutor && CURSO.instrutor) {
+    elInstrutor.textContent = CURSO.instrutor +
+      (CURSO.instrutorCred ? ' · ' + CURSO.instrutorCred : '');
+    elInstrutor.style.display = 'block';
+  }
+
+  // Contato de emergência — atualizar referência no rodapé
+  const elTel = document.getElementById('conf-tel');
+  if (elTel && CURSO.telefoneInfo) {
+    elTel.textContent = CURSO.telefoneInfo;
+    elTel.href = 'https://wa.me/55' + CURSO.telefoneInfo.replace(/\D/g, '');
   }
 });
 
