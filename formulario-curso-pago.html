@@ -641,10 +641,7 @@ const CURSO = {
 
     <div class="section">
       <div class="section-title">Sobre o curso</div>
-      <div class="info-block">
-        <strong>O que você vai aprender</strong>
-        Técnicas práticas de defesa pessoal israelense (Krav Magá / Kapap) adaptadas para mulheres. Consciência situacional, prevenção de riscos, quebra de agarrões, defesa contra ataques comuns e muito mais. Conteúdo 100% prático ministrado por especialistas credenciados.
-      </div>
+
       <div class="info-block">
         <strong>O que levar</strong>
         <ul>
@@ -652,7 +649,6 @@ const CURSO = {
           <li>Tênis fechado</li>
           <li>Garrafa de água</li>
           <li>Toalha pequena</li>
-          <li>Lanche para o intervalo</li>
         </ul>
       </div>
       <div class="warn-block">
@@ -686,27 +682,24 @@ const CURSO = {
       <p style="font-size:13px; color:var(--muted); margin-bottom:14px;">Leia com atenção antes de prosseguir.</p>
 
       <div class="terms-scroll" id="terms-box">
-        <h4>1. Elegibilidade</h4>
-        <p>O evento é destinado exclusivamente a mulheres. Participantes menores de 18 anos devem apresentar autorização assinada por responsável legal no dia do evento.</p>
-
-        <h4>2. Saúde e responsabilidade pessoal</h4>
+        <h4>1. Saúde e responsabilidade pessoal</h4>
         <p>Ao preencher esta ficha, a participante declara estar em boas condições físicas e mentais para a prática de atividade física por livre e espontânea vontade.</p>
         <p>A participante declara ser responsável por qualquer dano físico que possa sofrer em decorrência do curso israelense, isentando de qualquer responsabilidade cível e criminal os instrutores, funcionários, proprietários do local e demais participantes.</p>
 
-        <h4>3. Limitações funcionais</h4>
+        <h4>2. Limitações funcionais</h4>
         <p>Caso a participante possua qualquer condição médica, lesão ou limitação funcional que possa representar risco durante as atividades, deverá informar o instrutor responsável antes do início das atividades. A omissão desta informação é de responsabilidade exclusiva da participante.</p>
 
-        <h4>4. Uso de imagem</h4>
+        <h4>3. Uso de imagem</h4>
         <p>A participante autoriza expressamente o uso de fotografias, vídeos ou qualquer outro registro realizado durante o curso/seminário para fins de divulgação em qualquer mídia, a qualquer tempo.</p>
         <p>Caso não concorde, deve informar pessoalmente ao instrutor antes do início do evento. Registros para uso pessoal são permitidos apenas no início ou no final do curso.</p>
 
-        <h4>5. Indumentária e acessórios</h4>
+        <h4>4. Indumentária e acessórios</h4>
         <p>É obrigatório o uso de roupas adequadas para treino. É expressamente proibido o uso de brincos, pulseiras, colares, anéis, relógio ou qualquer acessório durante as atividades práticas, por razões de segurança de todas as participantes.</p>
 
-        <h4>6. Pontualidade e acesso</h4>
+        <h4>5. Pontualidade e acesso</h4>
         <p>O acesso ao evento será encerrado após o término do credenciamento. Não haverá entrada após este horário para garantir a qualidade e segurança das atividades.</p>
 
-        <h4>7. Conduta</h4>
+        <h4>6. Conduta</h4>
         <p>Espera-se postura respeitosa e colaborativa de todas as participantes. A organização reserva-se o direito de solicitar a saída de qualquer participante que comprometa a segurança ou o bom andamento do evento, sem direito a reembolso ou ressarcimento.</p>
       </div>
 
@@ -988,7 +981,7 @@ const CURSO = {
 </div><!-- /main -->
 
 <div class="footer">
-  <p>TML · Fábio Ramos · Krav Magá Kapap &nbsp;|&nbsp; <a href="#">Política de privacidade</a></p>
+  <p>TML · Fábio Ramos · Krav Maga Kapap &nbsp;|&nbsp; <a href="#">Política de privacidade</a></p>
 </div>
 
 <script>
@@ -1036,8 +1029,10 @@ function renderHero() {
   document.getElementById('hero-nome').innerHTML =
     resto ? resto + '<br><span>' + ultima + '</span>' : '<span>' + ultima + '</span>';
 
-  // Subtítulo
-  document.getElementById('hero-sub').textContent = CURSO.subtitulo || '';
+  // Instrutor
+  document.getElementById('hero-sub').textContent = CURSO.instrutor
+    ? 'Instrutor: ' + CURSO.instrutor
+    : '';
 
   // Preço — verifica antecipado
   const hoje = new Date().toISOString().split('T')[0];
@@ -1064,11 +1059,14 @@ function renderHero() {
     }
   }
 
-  // Pills
+  // Pills — data início, data fim (se diferente), horário, local
   const meta = document.getElementById('hero-meta');
   meta.innerHTML = '';
+  const dataDisplay = CURSO.dataFim && CURSO.dataFim !== CURSO.dataInicio
+    ? CURSO.dataInicio + ' a ' + CURSO.dataFim
+    : CURSO.dataInicio;
   [
-    { icon: '\uD83D\uDCC5', txt: CURSO.data },
+    { icon: '\uD83D\uDCC5', txt: dataDisplay },
     { icon: '\u23F0',        txt: CURSO.horario },
     { icon: '\uD83D\uDCCD', txt: CURSO.local },
   ].forEach(it => {
@@ -1079,18 +1077,15 @@ function renderHero() {
     meta.appendChild(d);
   });
 
-  // Instrutor
+  // Instrutor abaixo das pills
   const elInstrutor = document.getElementById('hero-instrutor');
-  if (elInstrutor && CURSO.instrutor) {
-    elInstrutor.textContent = CURSO.instrutor + (CURSO.instrutorCred ? ' · ' + CURSO.instrutorCred : '');
-    elInstrutor.style.display = 'block';
-  }
-
-  // Tel rodapé
-  const elTel = document.getElementById('conf-tel');
-  if (elTel && CURSO.telefoneInfo) {
-    elTel.textContent = CURSO.telefoneInfo;
-    elTel.href = 'https://wa.me/55' + CURSO.telefoneInfo.replace(/\D/g, '');
+  if (elInstrutor) {
+    if (CURSO.instrutor) {
+      elInstrutor.textContent = CURSO.instrutor;
+      elInstrutor.style.display = 'block';
+    } else {
+      elInstrutor.style.display = 'none';
+    }
   }
 }
 
@@ -1118,20 +1113,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     const dados = await resp.json();
 
     // Preencher CURSO com dados do JSON
-    CURSO.codigodocurso        = dados.codigo        || codigo;
-    CURSO.nome                 = dados.nome          || '';
-    CURSO.subtitulo            = dados.subtitulo     || '';
-    CURSO.gratuito             = dados.gratuito      === true;
-    CURSO.data                 = dados.data          || '';
-    CURSO.horario              = dados.horario       || '';
-    CURSO.local                = dados.local         || '';
-    CURSO.instrutor            = dados.instrutor     || '';
-    CURSO.instrutorCred        = dados.instrutorCred || '';
-    CURSO.telefoneInfo         = dados.telefone      || '';
-    CURSO.preco                = dados.preco         || 0;
-    CURSO.precoAntecipado      = dados.precoAntecipado || null;
-    CURSO.dataLimiteAntecipado = dados.dataLimiteAntecipado || null;
-    CURSO.fotoUrl              = dados.foto          || '';
+    CURSO.codigodocurso        = dados.codigo              || codigo;
+    CURSO.nome                 = dados.nome                || '';
+    CURSO.gratuito             = dados.gratuito            === true;
+    CURSO.dataInicio           = dados.dataInicio          || '';
+    CURSO.dataFim              = dados.dataFim             || '';
+    CURSO.horario              = dados.horario             || '';
+    CURSO.local                = dados.local               || '';
+    CURSO.instrutor            = dados.instrutor           || '';
+    CURSO.fotoUrl              = dados.foto                || '';
+    CURSO.preco                = dados.preco               || 0;
+    CURSO.precoAntecipado      = dados.precoAntecipado     || null;
+    CURSO.dataLimiteAntecipado = dados.dataLimiteAntecipado|| null;
     // linkPagamento NÃO vem no JSON — buscado pelo flow no momento do pagamento
 
   } catch(e) {
