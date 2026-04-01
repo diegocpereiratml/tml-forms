@@ -577,15 +577,16 @@ const CURSO = {
   <div class="hero-curso-img" id="hero-img-bg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-badge">
+    <div class="hero-badge" id="hero-badge" style="display:none;">
       <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="white"/></svg>
       Inscrições abertas
     </div>
-    <div class="hero-title" id="hero-nome">Congresso<br><span>Israelense</span></div>
-    <div class="hero-subtitle" id="hero-sub">para Mulheres</div>
-    <div class="hero-meta" id="hero-meta"></div>
-    <div class="hero-free" id="hero-preco">GRATUITO</div>
-    <div style="margin-top:12px; font-size:13px; color:rgba(255,255,255,0.6);" id="hero-vagas"></div>
+    <div id="hero-loading" style="font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:8px;">Carregando...</div>
+    <div class="hero-title" id="hero-nome" style="opacity:0;transition:opacity 0.3s;"></div>
+    <div class="hero-subtitle" id="hero-sub" style="opacity:0;transition:opacity 0.3s;"></div>
+    <div class="hero-meta" id="hero-meta" style="opacity:0;transition:opacity 0.3s;"></div>
+    <div class="hero-free" id="hero-preco" style="opacity:0;transition:opacity 0.3s;"></div>
+    <div style="margin-top:12px;font-size:13px;color:rgba(255,255,255,0.6);opacity:0;transition:opacity 0.3s;" id="hero-vagas"></div>
     <div style="margin-top:6px; font-size:12px; color:rgba(255,255,255,0.45); display:none;" id="hero-instrutor"></div>
   </div>
 </div>
@@ -1037,6 +1038,15 @@ function renderHero() {
       elInstrutor.style.display = 'none';
     }
   }
+  // Fade-in
+  const loading = document.getElementById('hero-loading');
+  if (loading) loading.style.display = 'none';
+  const badge = document.getElementById('hero-badge');
+  if (badge) badge.style.display = 'inline-flex';
+  ['hero-nome','hero-sub','hero-meta','hero-preco','hero-vagas'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.opacity = '1';
+  });
 }
 
 function mostrarErroCurso(msg) {
@@ -1269,7 +1279,7 @@ function buildReview() {
     '<strong style="color:var(--white);">' + CURSO.nome + '</strong><br>' +
     CURSO.data + '<br>' + CURSO.horario + '<br>' + CURSO.local + '<br>' +
     'Instrutor: ' + CURSO.instrutor + '<br>' +
-    '<span style="color:var(--gold); font-weight:600;">GRATUITO</span>';
+    '<span style="color:var(--gold); font-weight:600;"></span>';
 }
 
 // ========== SUBMIT ==========

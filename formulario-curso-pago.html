@@ -577,15 +577,16 @@ const CURSO = {
   <div class="hero-curso-img" id="hero-img-bg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-badge">
+    <div class="hero-badge" id="hero-badge" style="display:none;">
       <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="white"/></svg>
       Inscrições abertas
     </div>
-    <div class="hero-title" id="hero-nome">Seminário<br><span>Avançado</span></div>
-    <div class="hero-subtitle" id="hero-sub">Krav Magá · Certificado</div>
-    <div class="hero-meta" id="hero-meta"></div>
-    <div class="hero-free" id="hero-preco">R$ 297,00</div>
-    <div style="margin-top:12px; font-size:13px; color:rgba(255,255,255,0.6);" id="hero-vagas"></div>
+    <div id="hero-loading" style="font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:8px;">Carregando...</div>
+    <div class="hero-title" id="hero-nome" style="opacity:0;transition:opacity 0.3s;"></div>
+    <div class="hero-subtitle" id="hero-sub" style="opacity:0;transition:opacity 0.3s;"></div>
+    <div class="hero-meta" id="hero-meta" style="opacity:0;transition:opacity 0.3s;"></div>
+    <div class="hero-free" id="hero-preco" style="opacity:0;transition:opacity 0.3s;"></div>
+    <div style="margin-top:12px;font-size:13px;color:rgba(255,255,255,0.6);opacity:0;transition:opacity 0.3s;" id="hero-vagas"></div>
     <div style="margin-top:6px; font-size:12px; color:rgba(255,255,255,0.45); display:none;" id="hero-instrutor"></div>
   </div>
 </div>
@@ -876,7 +877,7 @@ const CURSO = {
       <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(201,168,76,0.08); border:1px solid rgba(201,168,76,0.2); border-radius:var(--radius); padding:14px 16px;">
         <div>
           <div style="font-size:12px; font-family:'Barlow Condensed',sans-serif; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-bottom:4px;" id="preco-label">Total a pagar</div>
-          <div style="font-size:28px; font-weight:600; color:var(--gold);" id="preco-display">R$ 297,00</div>
+          <div style="font-size:28px; font-weight:600; color:var(--gold);" id="preco-display"></div>
           <div style="font-size:12px; color:var(--muted);" id="preco-obs"></div>
         </div>
         <div style="font-family:'Bebas Neue',sans-serif; font-size:14px; letter-spacing:0.1em; color:var(--muted);">1 vaga</div>
@@ -1094,6 +1095,15 @@ function renderHero() {
       elInstrutor.style.display = 'none';
     }
   }
+  // Fade-in
+  const loading = document.getElementById('hero-loading');
+  if (loading) loading.style.display = 'none';
+  const badge = document.getElementById('hero-badge');
+  if (badge) badge.style.display = 'inline-flex';
+  ['hero-nome','hero-sub','hero-meta','hero-preco','hero-vagas'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.opacity = '1';
+  });
 }
 
 function mostrarErroCurso(msg) {
@@ -1389,7 +1399,7 @@ function buildReview() {
     '<strong style="color:var(--white);">' + CURSO.nome + '</strong><br>' +
     CURSO.data + '<br>' + CURSO.horario + '<br>' + CURSO.local + '<br>' +
     'Instrutor: ' + CURSO.instrutor + '<br>' +
-    '<span style="color:var(--gold); font-weight:600;">GRATUITO</span>';
+    '<span style="color:var(--gold); font-weight:600;"></span>';
 }
 
 // ========== SUBMIT ==========
