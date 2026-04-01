@@ -1,11 +1,12 @@
 {
   "codigo": "TML-CURSO-0002",
-  "nome": "Imobilização Tática Israelense e Combate e Defesa com Facas",
+  "nome": "Imobilizacao Tatica Israelense e Combate e Defesa com Facas",
   "gratuito": false,
   "dataInicio": "2024-06-01",
   "dataFim": "2024-06-01",
   "horario": "9:00 as 18:00",
-  "local": "Rua A, 123",
-  "instrutor": "Diego Pereira",
+  "local": "Rancho Falcao",
+  "instrutor": "",
+  "foto": "https://m365x13342704-my.sharepoint.com/:i:/g/personal/admin_m365x13342704_onmicrosoft_com/IQBCK2IV10EtS6KhUNauwtfsAQVCTSBdzUvonYCWCtn9qrs?e=9oatci",
   "preco": 500
 }
