@@ -543,35 +543,25 @@
      ============================================================ -->
 <script>
 const CURSO = {
-  // IDENTIFICAÇÃO
-  id: "CONGRESSO-ISRAELENSE-MG-2026",       // ID único do curso no Dataverse
-  nome: "Congresso Israelense para Mulheres",
-  subtitulo: "Defesa Pessoal Israelense · Gratuito",
-  gratuito: true,
+  // Preenchido dinamicamente via JSON do GitHub
+  // Não edite — o flow do Power Automate gera o JSON para cada curso
+  codigodocurso:  '',
+  nome:           '',
+  gratuito:       true,
+  dataInicio:     '',
+  dataFim:        '',
+  horario:        '',
+  local:          '',
+  instrutor:      '',
+  fotoUrl:        '',
+  preco:          0,
+  precoAntecipado: null,
+  dataLimiteAntecipado: null,
 
-  // DATA E LOCAL
-  data: "04 de abril de 2026 · Sábado",
-  horario: "08h00 às 17h00",
-  local: "Pará de Minas / MG",
-  endereco: "A confirmar — enviado por e-mail após inscrição",
+  // URL base — GitHub raw para demo, trocar por Azure Blob em produção
+  blobBaseUrl: "https://raw.githubusercontent.com/diegocpereiratml/tml-forms/main/cursos",
 
-  // INSTRUTOR
-  instrutor: "Mestre Fábio Ramos",
-  instrutorCred: "Credenciado na Polícia Federal",
-
-  // VAGAS
-  vagasTotal: 100,
-  vagasDisponiveis: 64,
-
-  // CONTATO
-  telefoneInfo: "(18) 99654-1763",
-  emailInfo: "contato@tmlkravmaga.com.br",
-
-  // FOTO DO CURSO (URL pública da imagem cadastrada no Dataverse)
-  // Pode ser sobrescrita pelo parâmetro ?foto= na URL
-  fotoUrl: null,  // ex: "https://seusite.com/imagens/curso-mulheres.jpg"
-
-  // POWER AUTOMATE WEBHOOK (preencher após criar o flow)
+  // Webhook do Power Automate
   webhookUrl: "https://prod-XX.westus.logic.azure.com/workflows/SEU-WEBHOOK-AQUI",
 };
 </script>
@@ -637,6 +627,7 @@ const CURSO = {
           <li>Tênis fechado</li>
           <li>Garrafa de água</li>
           <li>Toalha pequena</li>
+          <li>Lanche para o intervalo</li>
         </ul>
       </div>
       <div class="warn-block">
@@ -674,20 +665,20 @@ const CURSO = {
         <p>Ao preencher esta ficha, a participante declara estar em boas condições físicas e mentais para a prática de atividade física por livre e espontânea vontade.</p>
         <p>A participante declara ser responsável por qualquer dano físico que possa sofrer em decorrência do curso israelense, isentando de qualquer responsabilidade cível e criminal os instrutores, funcionários, proprietários do local e demais participantes.</p>
 
-        <h4>2. Limitações funcionais</h4>
+        <h4>1. Limitações funcionais</h4>
         <p>Caso a participante possua qualquer condição médica, lesão ou limitação funcional que possa representar risco durante as atividades, deverá informar o instrutor responsável antes do início das atividades. A omissão desta informação é de responsabilidade exclusiva da participante.</p>
 
-        <h4>3. Uso de imagem</h4>
+        <h4>2. Uso de imagem</h4>
         <p>A participante autoriza expressamente o uso de fotografias, vídeos ou qualquer outro registro realizado durante o curso/seminário para fins de divulgação em qualquer mídia, a qualquer tempo.</p>
         <p>Caso não concorde, deve informar pessoalmente ao instrutor antes do início do evento. Registros para uso pessoal são permitidos apenas no início ou no final do curso.</p>
 
-        <h4>4. Indumentária e acessórios</h4>
+        <h4>3. Indumentária e acessórios</h4>
         <p>É obrigatório o uso de roupas adequadas para treino. É expressamente proibido o uso de brincos, pulseiras, colares, anéis, relógio ou qualquer acessório durante as atividades práticas, por razões de segurança de todas as participantes.</p>
 
-        <h4>5. Pontualidade e acesso</h4>
+        <h4>4. Pontualidade e acesso</h4>
         <p>O acesso ao evento será encerrado após o término do credenciamento. Não haverá entrada após este horário para garantir a qualidade e segurança das atividades.</p>
 
-        <h4>6. Conduta</h4>
+        <h4>5. Conduta</h4>
         <p>Espera-se postura respeitosa e colaborativa de todas as participantes. A organização reserva-se o direito de solicitar a saída de qualquer participante que comprometa a segurança ou o bom andamento do evento, sem direito a reembolso ou ressarcimento.</p>
       </div>
 
@@ -916,7 +907,7 @@ const CURSO = {
 </div><!-- /main -->
 
 <div class="footer">
-  <p>TML · Fábio Ramos · Krav Maga Kapap &nbsp;|&nbsp; <a href="#">Política de privacidade</a></p>
+  <p>TML · Fábio Ramos · Krav Magá Kapap &nbsp;|&nbsp; <a href="#">Política de privacidade</a></p>
 </div>
 
 <script>
