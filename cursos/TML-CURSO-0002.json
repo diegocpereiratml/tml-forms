@@ -7,7 +7,5 @@
   "horario": "9:00 as 18:00",
   "local": "Rua A, 123",
   "instrutor": "Diego Pereira",
-  "preco": 500,
-  "precoAntecipado": 450,
-  "dataLimiteAntecipado": "2024-05-01"
+  "preco": 500
 }
