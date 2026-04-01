@@ -582,11 +582,8 @@ const CURSO = {
     </div>
     <div id="hero-loading" style="font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:8px;">Carregando...</div>
     <div class="hero-title" id="hero-nome" style="opacity:0;transition:opacity 0.3s;"></div>
-    <div class="hero-subtitle" id="hero-sub" style="opacity:0;transition:opacity 0.3s;"></div>
     <div class="hero-meta" id="hero-meta" style="opacity:0;transition:opacity 0.3s;"></div>
     <div class="hero-free" id="hero-preco" style="opacity:0;transition:opacity 0.3s;"></div>
-    <div style="margin-top:12px;font-size:13px;color:rgba(255,255,255,0.6);opacity:0;transition:opacity 0.3s;" id="hero-vagas"></div>
-    <div style="margin-top:6px; font-size:12px; color:rgba(255,255,255,0.45); display:none;" id="hero-instrutor"></div>
   </div>
 </div>
 
@@ -1006,7 +1003,7 @@ function renderHero() {
 
   // Instrutor
   document.getElementById('hero-sub').textContent = CURSO.instrutor
-    ? 'Instrutor: ' + CURSO.instrutor
+    ? 'Instrutor(a): ' + CURSO.instrutor
     : '';
 
   // Preço — verifica antecipado
