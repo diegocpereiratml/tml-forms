@@ -1,1 +1,14 @@
-{"codigo":"TML-CURSO-0002","nome":"Imobilizacao Tatica Israelense e Combate e Defesa com Facas","gratuito":"false","dataInicio":"","dataFim":"","horario":"","local":"Rua A, 123","instrutor":"","foto":"https://m365x13342704-my.sharepoint.com/:f:/g/personal/admin_m365x13342704_onmicrosoft_com/IgDv56tdrS2oSpXfFdBB5JHrAfxvWjGHooirhu5rI4sBCtI?e=UZhvJo","preco":500.0,"precoAntecipado":"450","dataLimiteAntecipado":"2024-05-01"}
+{
+  "codigo": "TML-CURSO-0002",
+  "nome": "Imobilizacao Tatica Israelense e Combate e Defesa com Facas",
+  "gratuito": false,
+  "dataInicio": "2024-06-01",
+  "dataFim": "2024-06-01",
+  "horario": "9:00 as 18:00",
+  "local": "Rua A, 123",
+  "instrutor": "",
+  "foto": "https://m365x13342704-my.sharepoint.com/:f:/g/personal/admin_m365x13342704_onmicrosoft_com/IgDv56tdrS2oSpXfFdBB5JHrAfxvWjGHooirhu5rI4sBCtI?e=UZhvJo",
+  "preco": 500,
+  "precoAntecipado": 450,
+  "dataLimiteAntecipado": "2024-05-01"
+}
