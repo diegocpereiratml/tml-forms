@@ -839,19 +839,31 @@ function renderHero() {
   const overlay  = document.getElementById('curso-banner-overlay');
   const bannerImg = document.getElementById('curso-banner-img');
 
-  function showOverlay() {
+  function showOverlay(temFoto) {
     if (loading) loading.style.display = 'none';
-    if (overlay) overlay.style.display = 'flex';
+    if (overlay) {
+      overlay.style.display = 'flex';
+      if (!temFoto) {
+        overlay.style.position = 'relative';
+        overlay.style.background = 'var(--dark)';
+        overlay.style.padding = '20px';
+        overlay.style.borderBottom = '2px solid var(--gold)';
+      }
+    }
     setTimeout(() => { elPreco.style.opacity = '1'; }, 50);
   }
 
   if (CURSO.fotoUrl) {
     const img = new Image();
-    img.onload = () => { bannerImg.src = CURSO.fotoUrl; bannerImg.style.display = 'block'; showOverlay(); };
-    img.onerror = () => showOverlay();
+    img.onload = () => {
+      bannerImg.src = CURSO.fotoUrl;
+      bannerImg.style.display = 'block';
+      showOverlay(true);
+    };
+    img.onerror = () => showOverlay(false);
     img.src = CURSO.fotoUrl;
   } else {
-    showOverlay();
+    showOverlay(false);
   }
 }
 
