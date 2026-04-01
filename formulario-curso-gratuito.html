@@ -478,11 +478,11 @@ const CURSO = {
     </div>
     <div class="prog-step" id="step2" onclick="goToIfDone(2)">
       <div class="prog-dot" id="dot2">2</div>
-      <div class="prog-label">Termos</div>
+      <div class="prog-label">Cadastro</div>
     </div>
     <div class="prog-step" id="step3" onclick="goToIfDone(3)">
       <div class="prog-dot" id="dot3">3</div>
-      <div class="prog-label">Cadastro</div>
+      <div class="prog-label">Termos</div>
     </div>
     <div class="prog-step" id="step4" onclick="goToIfDone(4)">
       <div class="prog-dot" id="dot4">4</div>
@@ -493,112 +493,7 @@ const CURSO = {
 
 <div class="main">
 
-  <!-- ===== TELA 1: INFORMAÇÕES DO CURSO ===== -->
-  <div class="screen visible" id="s1">
-
-    <div class="section">
-      <div class="section-title">Sobre o curso</div>
-
-      <div class="info-block">
-        <strong>O que levar</strong>
-        <ul>
-          <li>Roupas confortáveis para treino</li>
-          <li>Tênis fechado</li>
-          <li>Garrafa de água</li>
-        </ul>
-      </div>
-      <div class="warn-block">
-        <strong>Não é permitido</strong>
-        <ul>
-          <li>Brincos, pulseiras, colares, anéis, relógio</li>
-          <li>Blusas de alça, tops ou shorts curtos</li>
-          <li>Fotografar ou filmar participantes (apenas uso pessoal no próprio celular, no início ou no final do curso)</li>
-          <li>Chegar após o encerramento do credenciamento</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-title">Certificado e fotos</div>
-      <div class="info-block">
-        Fotos e vídeos institucionais serão realizados durante o evento para uso exclusivo da federação e redes sociais da escola. Ao confirmar a inscrição, a participante autoriza este uso de imagem.
-      </div>
-    </div>
-
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="goTo(2)">Continuar — Ler os termos →</button>
-    </div>
-  </div>
-
-  <!-- ===== TELA 2: TERMOS ===== -->
-  <div class="screen" id="s2">
-
-    <div class="section">
-      <div class="section-title">Termos e condições de participação</div>
-      <p style="font-size:13px; color:var(--muted); margin-bottom:14px;">Leia com atenção antes de prosseguir.</p>
-
-      <div class="terms-scroll" id="terms-box">
-        <h4>1. Saúde e responsabilidade pessoal</h4>
-        <p>Ao preencher esta ficha, a participante declara estar em boas condições físicas e mentais para a prática de atividade física por livre e espontânea vontade.</p>
-        <p>A participante declara ser responsável por qualquer dano físico que possa sofrer em decorrência do curso israelense, isentando de qualquer responsabilidade cível e criminal os instrutores, funcionários, proprietários do local e demais participantes.</p>
-
-        <h4>1. Limitações funcionais</h4>
-        <p>Caso a participante possua qualquer condição médica, lesão ou limitação funcional que possa representar risco durante as atividades, deverá informar o instrutor responsável antes do início das atividades. A omissão desta informação é de responsabilidade exclusiva da participante.</p>
-
-        <h4>2. Uso de imagem</h4>
-        <p>A participante autoriza expressamente o uso de fotografias, vídeos ou qualquer outro registro realizado durante o curso/seminário para fins de divulgação em qualquer mídia, a qualquer tempo.</p>
-        <p>Caso não concorde, deve informar pessoalmente ao instrutor antes do início do evento. Registros para uso pessoal são permitidos apenas no início ou no final do curso.</p>
-
-        <h4>3. Indumentária e acessórios</h4>
-        <p>É obrigatório o uso de roupas adequadas para treino. É expressamente proibido o uso de brincos, pulseiras, colares, anéis, relógio ou qualquer acessório durante as atividades práticas, por razões de segurança de todas as participantes.</p>
-
-        <h4>4. Pontualidade e acesso</h4>
-        <p>O acesso ao evento será encerrado após o término do credenciamento. Não haverá entrada após este horário para garantir a qualidade e segurança das atividades.</p>
-
-        <h4>5. Conduta</h4>
-        <p>Espera-se postura respeitosa e colaborativa de todas as participantes. A organização reserva-se o direito de solicitar a saída de qualquer participante que comprometa a segurança ou o bom andamento do evento, sem direito a reembolso ou ressarcimento.</p>
-      </div>
-
-      <div class="check-row" id="cr1" onclick="toggleCheck('ch1','cr1'); checkTerms()">
-        <input type="checkbox" id="ch1">
-        <div class="check-box">
-          <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5"><polyline points="1.5 6 4.5 9 10.5 3"/></svg>
-        </div>
-        <div class="check-txt">Li e concordo com todos os termos e condições acima</div>
-      </div>
-
-      <div class="check-row" id="cr2" onclick="toggleCheck('ch2','cr2'); checkTerms()">
-        <input type="checkbox" id="ch2">
-        <div class="check-box">
-          <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5"><polyline points="1.5 6 4.5 9 10.5 3"/></svg>
-        </div>
-        <div class="check-txt">Declaro estar em boas condições físicas e mentais para a prática de atividade física</div>
-      </div>
-
-      <div class="check-row" id="cr3" onclick="toggleCheck('ch3','cr3'); checkTerms()">
-        <input type="checkbox" id="ch3">
-        <div class="check-box">
-          <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5"><polyline points="1.5 6 4.5 9 10.5 3"/></svg>
-        </div>
-        <div class="check-txt">Autorizo expressamente o uso da minha imagem para fins institucionais da escola e da federação</div>
-      </div>
-
-      <div class="check-row" id="cr4" onclick="toggleCheck('ch4','cr4'); checkTerms()">
-        <input type="checkbox" id="ch4">
-        <div class="check-box">
-          <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5"><polyline points="1.5 6 4.5 9 10.5 3"/></svg>
-        </div>
-        <div class="check-txt">Declaro ser responsável por qualquer dano físico decorrente da minha participação, isentando os instrutores, funcionários e proprietários do local de responsabilidade cível e criminal</div>
-      </div>
-    </div>
-
-    <div class="btn-row">
-      <button class="btn" onclick="goTo(1)">← Voltar</button>
-      <button class="btn btn-primary" id="btn-termos" onclick="goTo(3)" disabled>Preencher cadastro →</button>
-    </div>
-  </div>
-
-  <!-- ===== TELA 3: CADASTRO ===== -->
+  <!-- ===== TELA 1: CADASTRO ===== -->
   <div class="screen" id="s3">
 
     <div class="section">
@@ -741,7 +636,75 @@ const CURSO = {
     </div>
   </div>
 
-  <!-- ===== TELA 4: REVISÃO ===== -->
+  <!-- ===== TELA 2: TERMOS ===== -->
+  <div class="screen" id="s2">
+
+    <div class="section">
+      <div class="section-title">Termos e condições de participação</div>
+      <p style="font-size:13px; color:var(--muted); margin-bottom:14px;">Leia com atenção antes de prosseguir.</p>
+
+      <div class="terms-scroll" id="terms-box">
+        <h4>1. Saúde e responsabilidade pessoal</h4>
+        <p>Ao preencher esta ficha, a participante declara estar em boas condições físicas e mentais para a prática de atividade física por livre e espontânea vontade.</p>
+        <p>A participante declara ser responsável por qualquer dano físico que possa sofrer em decorrência do curso israelense, isentando de qualquer responsabilidade cível e criminal os instrutores, funcionários, proprietários do local e demais participantes.</p>
+
+        <h4>1. Limitações funcionais</h4>
+        <p>Caso a participante possua qualquer condição médica, lesão ou limitação funcional que possa representar risco durante as atividades, deverá informar o instrutor responsável antes do início das atividades. A omissão desta informação é de responsabilidade exclusiva da participante.</p>
+
+        <h4>2. Uso de imagem</h4>
+        <p>A participante autoriza expressamente o uso de fotografias, vídeos ou qualquer outro registro realizado durante o curso/seminário para fins de divulgação em qualquer mídia, a qualquer tempo.</p>
+        <p>Caso não concorde, deve informar pessoalmente ao instrutor antes do início do evento. Registros para uso pessoal são permitidos apenas no início ou no final do curso.</p>
+
+        <h4>3. Indumentária e acessórios</h4>
+        <p>É obrigatório o uso de roupas adequadas para treino. É expressamente proibido o uso de brincos, pulseiras, colares, anéis, relógio ou qualquer acessório durante as atividades práticas, por razões de segurança de todas as participantes.</p>
+
+        <h4>4. Pontualidade e acesso</h4>
+        <p>O acesso ao evento será encerrado após o término do credenciamento. Não haverá entrada após este horário para garantir a qualidade e segurança das atividades.</p>
+
+        <h4>5. Conduta</h4>
+        <p>Espera-se postura respeitosa e colaborativa de todas as participantes. A organização reserva-se o direito de solicitar a saída de qualquer participante que comprometa a segurança ou o bom andamento do evento, sem direito a reembolso ou ressarcimento.</p>
+      </div>
+
+      <div class="check-row" id="cr1" onclick="toggleCheck('ch1','cr1'); checkTerms()">
+        <input type="checkbox" id="ch1">
+        <div class="check-box">
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5"><polyline points="1.5 6 4.5 9 10.5 3"/></svg>
+        </div>
+        <div class="check-txt">Li e concordo com todos os termos e condições acima</div>
+      </div>
+
+      <div class="check-row" id="cr2" onclick="toggleCheck('ch2','cr2'); checkTerms()">
+        <input type="checkbox" id="ch2">
+        <div class="check-box">
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5"><polyline points="1.5 6 4.5 9 10.5 3"/></svg>
+        </div>
+        <div class="check-txt">Declaro estar em boas condições físicas e mentais para a prática de atividade física</div>
+      </div>
+
+      <div class="check-row" id="cr3" onclick="toggleCheck('ch3','cr3'); checkTerms()">
+        <input type="checkbox" id="ch3">
+        <div class="check-box">
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5"><polyline points="1.5 6 4.5 9 10.5 3"/></svg>
+        </div>
+        <div class="check-txt">Autorizo expressamente o uso da minha imagem para fins institucionais da escola e da federação</div>
+      </div>
+
+      <div class="check-row" id="cr4" onclick="toggleCheck('ch4','cr4'); checkTerms()">
+        <input type="checkbox" id="ch4">
+        <div class="check-box">
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5"><polyline points="1.5 6 4.5 9 10.5 3"/></svg>
+        </div>
+        <div class="check-txt">Declaro ser responsável por qualquer dano físico decorrente da minha participação, isentando os instrutores, funcionários e proprietários do local de responsabilidade cível e criminal</div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn" onclick="goTo(1)">← Voltar</button>
+      <button class="btn btn-primary" id="btn-termos" onclick="goTo(3)" disabled>Continuar →</button>
+    </div>
+  </div>
+
+  <!-- ===== TELA 3: REVISÃO ===== -->
   <div class="screen" id="s4">
     <div class="section">
       <div class="section-title">Confirme seus dados</div>
@@ -767,7 +730,7 @@ const CURSO = {
     </div>
   </div>
 
-  <!-- ===== TELA 5: CONFIRMAÇÃO ===== -->
+  <!-- ===== TELA 4: CONFIRMAÇÃO ===== -->
   <div class="screen" id="s5">
     <div class="confirm-wrap">
       <div class="confirm-icon">
@@ -1084,7 +1047,7 @@ function validateCadastro() {
   formData.convenioDetalhe = document.getElementById('f-convenio-detalhe').value.trim();
   formData.emergencia = document.getElementById('f-emergencia').value.trim();
 
-  goTo(4);
+  goTo(2);
 }
 
 // ========== REVISÃO ==========
