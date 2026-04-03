@@ -1,0 +1,12 @@
+{
+  "codigo": "TML-CURSO-0001",
+  "nome": "Curso Mulheres Para de Minas",
+  "gratuito": false,
+  "dataInicio": "2024-07-10",
+  "dataFim": "2024-07-12",
+  "horario": "13:00 as 18:00",
+  "local": "Centro de Convenções",
+  "instrutor": "Fabio Ramos",
+  "foto": "http://img.com/curso2.jpg",
+  "preco": 800
+}
