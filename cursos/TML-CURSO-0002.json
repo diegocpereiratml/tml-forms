@@ -8,6 +8,5 @@
   "local": "Rancho Falcao",
   "instrutor": "Fernanda",
   "foto": "https://m365x13342704-my.sharepoint.com/:i:/g/personal/admin_m365x13342704_onmicrosoft_com/IQBCK2IV10EtS6KhUNauwtfsAQVCTSBdzUvonYCWCtn9qrs?e=9oatci",
-  "preco": 500,
-  "webhookUrl": "https://default1aff5d8139324531bcf36e07a68f25.dc.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/140f3ac4b8cc4b2ea147bf6c2c15e728/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=cWVRtn-UVwpmqh2yHsWlBtuz40Q89N0Azsrjfn29hmc"
+  "preco": 500
 }
