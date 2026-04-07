@@ -445,8 +445,9 @@ const CURSO = {
   // URL base — GitHub raw para demo, trocar por Azure Blob em produção
   blobBaseUrl: "https://raw.githubusercontent.com/diegocpereiratml/tml-forms/main/cursos",
 
-  // Webhook do Power Automate
-  webhookUrl: "https://default1aff5d8139324531bcf36e07a68f25.dc.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/140f3ac4b8cc4b2ea147bf6c2c15e728/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=cWVRtn-UVwpmqh2yHsWlBtuz40Q89N0Azsrjfn29hmc",
+  // Webhook do Power Automate — NUNCA expor no JSON público do GitHub
+  // Em produção: substituir por Azure Function como proxy
+  webhookUrl: "https://prod-XX.westus.logic.azure.com/workflows/SEU-WEBHOOK-AQUI",
 };
 </script>
 <!-- ============================================================ -->
@@ -631,8 +632,7 @@ const CURSO = {
     </div>
 
     <div class="btn-row">
-      <button class="btn" onclick="goTo(2)">← Voltar</button>
-      <button class="btn btn-primary" onclick="validateCadastro()">Revisar inscrição →</button>
+      <button class="btn btn-primary" onclick="validateCadastro()">Revisar termos →</button>
     </div>
   </div>
 
@@ -918,7 +918,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Buscar JSON do Azure Blob Storage
   try {
     const url = CURSO.blobBaseUrl + '/' + encodeURIComponent(codigo) + '.json';
-    const resp = await fetch(url);
+    const resp = await fetch(url, {
+      method: 'GET',
+      headers: { 'Accept': 'application/json' },
+      cache: 'no-cache',
+    });
     if (!resp.ok) throw new Error('Curso não encontrado');
     const dados = await resp.json();
 
@@ -932,6 +936,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     CURSO.local                = dados.local               || '';
     CURSO.instrutor            = dados.instrutor           || '';
     CURSO.fotoUrl              = dados.foto                || '';
+    // webhookUrl NUNCA vem do JSON — fixo no HTML por segurança
     CURSO.preco                = dados.preco               || 0;
     CURSO.precoAntecipado      = dados.precoAntecipado     || null;
     CURSO.dataLimiteAntecipado = dados.dataLimiteAntecipado|| null;
