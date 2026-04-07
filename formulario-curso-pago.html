@@ -447,7 +447,7 @@ const CURSO = {
 
   // Webhook do Power Automate — NUNCA expor no JSON público do GitHub
   // Em produção: substituir por Azure Function como proxy
-  webhookUrl: "https://default1aff5d8139324531bcf36e07a68f25.dc.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/140f3ac4b8cc4b2ea147bf6c2c15e728/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=cWVRtn-UVwpmqh2yHsWlBtuz40Q89N0Azsrjfn29hmc",
+  webhookUrl: "https://prod-XX.westus.logic.azure.com/workflows/SEU-WEBHOOK-AQUI",
 };
 </script>
 <!-- ============================================================ -->
@@ -789,8 +789,8 @@ const CURSO = {
       <div class="confirm-icon">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
-      <div class="confirm-title">Inscrição confirmada!</div>
-      <div class="confirm-sub">Sua inscrição foi registrada com sucesso. Em breve você receberá um e-mail com todos os detalhes do evento.</div>
+      <div class="confirm-title">Inscrição registrada!</div>
+      <div class="confirm-sub">Seus dados foram registrados. Você receberá um e-mail de confirmação assim que o pagamento for processado.</div>
       <div class="protocol-badge" id="conf-protocolo">KM-2026-0000</div>
       <div class="confirm-card" id="conf-card"></div>
       <p style="margin-top:20px; font-size:13px; color:var(--muted);">Dúvidas? Entre em contato pelo WhatsApp <a href="#" id="conf-tel" style="color:var(--gold);"></a></p>
