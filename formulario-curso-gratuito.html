@@ -704,7 +704,7 @@ const CURSO = {
     </div>
   </div>
 
-  <!-- ===== TELA 3: REVISÃO ===== -->
+  <!-- ===== TELA 3: CONFIRMAR ===== -->
   <div class="screen" id="s3">
     <div class="section">
       <div class="section-title">Confirme seus dados</div>
@@ -913,9 +913,11 @@ function goToIfDone(n) {
 }
 
 function updateProgress(current) {
-  for (let i = 1; i <= 4; i++) {
-    const step = document.getElementById('step' + i);
+  const stepIds = ['step1','step2','step3'];
+  for (let i = 1; i <= 3; i++) {
+    const step = document.getElementById(stepIds[i-1]);
     const dot  = document.getElementById('dot' + i);
+    if (!step || !dot) continue;
     step.className = 'prog-step';
     if (i < current) {
       step.classList.add('done');
