@@ -1084,65 +1084,51 @@ async function submitForm() {
   const btn = document.getElementById('btn-submit');
   const spinner = document.getElementById('spinner');
   const txt = document.getElementById('btn-submit-txt');
-
   btn.disabled = true;
   spinner.classList.add('visible');
   txt.textContent = 'Enviando...';
-
   const payload = {
-    cursoId:           CURSO.id,
-    cursoNome:         CURSO.nome,
-    gratuito:          CURSO.gratuito,
-    nome:              formData.nome,
-    cpf:               formData.cpf,
-    rg:                formData.rg,
-    email:             formData.email,
-    telefone:          formData.telefone,
-    endereco:          formData.endereco,
-    saude:             formData.saude,
-    saudeDetalhe:      formData.saudeDetalhe || '',
-    limitacao:         formData.limitacao,
-    limitacaoDetalhe:  formData.limitacaoDetalhe || '',
-    convenio:          formData.convenio,
-    convenioDetalhe:   formData.convenioDetalhe || '',
-    emergencia:        formData.emergencia,
-    aceitouTermos:     true,
-    aceitouSaude:      true,
-    aceitouImagem:     true,
-    aceitouResponsabilidade: true,
-    dataInscricao:     new Date().toISOString(),
-    tipoinscrito:      1,
+    cursoId: CURSO.codigodocurso, gratuito: true,
+    nome: formData.nome, cpf: formData.cpf, rg: formData.rg,
+    email: formData.email, telefone: formData.telefone,
+    endereco: formData.endereco, saude: formData.saude,
+    saudeDetalhe: formData.saudeDetalhe || '',
+    limitacao: formData.limitacao, limitacaoDetalhe: formData.limitacaoDetalhe || '',
+    convenio: formData.convenio, convenioDetalhe: formData.convenioDetalhe || '',
+    emergencia: formData.emergencia,
+    aceitouTermos: true, aceitouSaude: true, aceitouImagem: true,
+    aceitouResponsabilidade: true, dataInscricao: new Date().toISOString(), tipoinscrito: 1,
   };
-
   try {
     const resp = await fetch(CURSO.webhookUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
-
-    // Gerar protocolo local (o definitivo vem no e-mail do Power Automate)
-    const proto = 'KM-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random()*9000)+1000);
-    document.getElementById('conf-protocolo').textContent = proto;
-
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({}));
+      if (resp.status === 409) {
+        alert('Você já possui uma inscrição confirmada neste curso.');
+        btn.disabled = false; spinner.classList.remove('visible');
+        txt.textContent = 'Confirmar inscrição'; return;
+      }
+      throw new Error(err.mensagem || 'Erro ao registrar inscrição');
+    }
+    const data = await resp.json();
+    document.getElementById('conf-protocolo').textContent =
+      data.inscricaoId
+        ? 'KM-' + new Date().getFullYear() + '-' + data.inscricaoId.substring(0,8).toUpperCase()
+        : 'KM-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random()*9000)+1000);
     document.getElementById('conf-card').innerHTML =
-      '<div class="confirm-row"><span class="confirm-key">Evento</span><span class="confirm-val">' + CURSO.nome + '</span></div>' +
+      '<div class="confirm-row"><span class="confirm-key">Curso</span><span class="confirm-val">' + (data.nomeCurso || CURSO.nome) + '</span></div>' +
       '<div class="confirm-row"><span class="confirm-key">Data</span><span class="confirm-val">' + CURSO.dataInicio + '</span></div>' +
       '<div class="confirm-row"><span class="confirm-key">Local</span><span class="confirm-val">' + CURSO.local + '</span></div>' +
-      '<div class="confirm-row"><span class="confirm-key">Inscrita</span><span class="confirm-val">' + formData.nome + '</span></div>' +
+      '<div class="confirm-row"><span class="confirm-key">Inscrito(a)</span><span class="confirm-val">' + formData.nome + '</span></div>' +
       '<div class="confirm-row"><span class="confirm-key">E-mail</span><span class="confirm-val">' + formData.email + '</span></div>';
-
-    document.getElementById('conf-tel').textContent = CURSO.telefoneInfo;
-    document.getElementById('conf-tel').href = 'https://wa.me/55' + CURSO.telefoneInfo.replace(/\D/g,'');
-
-    goTo(5);
-    document.getElementById('progress-wrap')?.remove();
-
+    goTo(4);
   } catch (e) {
-    btn.disabled = false;
-    spinner.classList.remove('visible');
+    btn.disabled = false; spinner.classList.remove('visible');
     txt.textContent = 'Confirmar inscrição';
-    alert('Erro ao enviar inscrição. Verifique sua conexão e tente novamente.\n\nSe o problema persistir, entre em contato pelo WhatsApp ' + CURSO.telefoneInfo);
+    alert('Erro ao enviar inscrição. Verifique sua conexão e tente novamente.');
   }
 }
 </script>

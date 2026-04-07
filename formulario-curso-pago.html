@@ -446,7 +446,7 @@ const CURSO = {
   blobBaseUrl: "https://raw.githubusercontent.com/diegocpereiratml/tml-forms/main/cursos",
 
   // Webhook do Power Automate
-  webhookUrl: "https://default1aff5d8139324531bcf36e07a68f25.dc.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/140f3ac4b8cc4b2ea147bf6c2c15e728/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=cWVRtn-UVwpmqh2yHsWlBtuz40Q89N0Azsrjfn29hmc",
+  webhookUrl: "https://prod-XX.westus.logic.azure.com/workflows/SEU-WEBHOOK-AQUI",
 };
 </script>
 <!-- ============================================================ -->
@@ -1201,57 +1201,65 @@ async function submitFormPago() {
 
   btn.disabled = true;
   spinner.classList.add('visible');
-  txt.textContent = 'Criando cobrança...';
+  txt.textContent = 'Registrando inscrição...';
 
   const payload = {
-    cursoId:           CURSO.id,
-    cursoNome:         CURSO.nome,
-    gratuito:          false,
-    valor:             formData.valorFinal,
-    metodoPagamento:   formData.metodoPagamento,
-    nome:              formData.nome,
-    cpf:               formData.cpf,
-    rg:                formData.rg,
-    email:             formData.email,
-    telefone:          formData.telefone,
-    endereco:          formData.endereco,
-    saude:             formData.saude,
-    saudeDetalhe:      formData.saudeDetalhe || '',
-    limitacao:         formData.limitacao,
-    limitacaoDetalhe:  formData.limitacaoDetalhe || '',
-    convenio:          formData.convenio,
-    convenioDetalhe:   formData.convenioDetalhe || '',
-    emergencia:        formData.emergencia,
-    aceitouTermos:     true,
-    aceitouSaude:      true,
-    aceitouImagem:     true,
+    cursoId:                 CURSO.codigodocurso,
+    gratuito:                false,
+    nome:                    formData.nome,
+    cpf:                     formData.cpf,
+    rg:                      formData.rg,
+    email:                   formData.email,
+    telefone:                formData.telefone,
+    endereco:                formData.endereco,
+    saude:                   formData.saude,
+    saudeDetalhe:            formData.saudeDetalhe || '',
+    limitacao:               formData.limitacao,
+    limitacaoDetalhe:        formData.limitacaoDetalhe || '',
+    convenio:                formData.convenio,
+    convenioDetalhe:         formData.convenioDetalhe || '',
+    emergencia:              formData.emergencia,
+    aceitouTermos:           true,
+    aceitouSaude:            true,
+    aceitouImagem:           true,
     aceitouResponsabilidade: true,
-    dataInscricao:     new Date().toISOString(),
-    tipoinscrito:      1,
+    dataInscricao:           new Date().toISOString(),
+    tipoinscrito:            1,
   };
 
   try {
-    // Envia para Power Automate que cria inscrição pendente + gera link no Asaas
     const resp = await fetch(CURSO.webhookUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
+
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({}));
+      if (resp.status === 409) {
+        alert('Você já possui uma inscrição confirmada neste curso.');
+        btn.disabled = false;
+        spinner.classList.remove('visible');
+        txt.textContent = 'Confirmar e ir para o pagamento';
+        return;
+      }
+      throw new Error(err.mensagem || 'Erro ao registrar inscrição');
+    }
+
     const data = await resp.json();
 
-    // Power Automate retorna o link de pagamento gerado pelo Asaas
     if (data.linkPagamento) {
       txt.textContent = 'Redirecionando para o pagamento...';
       setTimeout(() => { window.location.href = data.linkPagamento; }, 1200);
     } else {
-      throw new Error('Link de pagamento não retornado');
+      throw new Error('Link de pagamento não retornado pelo servidor');
     }
 
   } catch (e) {
     btn.disabled = false;
     spinner.classList.remove('visible');
     txt.textContent = 'Confirmar e ir para o pagamento';
-    alert('Erro ao processar. Verifique sua conexão e tente novamente.\n\nSe persistir, entre em contato: ' + CURSO.telefoneInfo);
+    alert('Erro ao processar. Verifique sua conexão e tente novamente.');
   }
 }
 </script>
